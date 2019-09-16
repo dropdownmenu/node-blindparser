@@ -93,7 +93,7 @@ vows.describe('bindparser').addBatch({
       var item = docs.items[0];
       assert.isString(item.id);
       assert.isString(item.title);
-      assert.isString(item.desc);
+      assert.isObject(item.desc);
       assert.isArray(item.category);
       assert.isString(item.link);
       assert.isNumber(item.updated);
@@ -151,7 +151,41 @@ vows.describe('bindparser').addBatch({
   },
   'craigslist': {
     topic: function() {
-      parser.parseURL('http://portland.craigslist.org/sof/index.rss', this.callback);
+      parser.parseURL('https://www.craigslist.org/about/best/all/index.rss', this.callback);
+    },
+    'response is formatted as rss': function(err, docs) {
+      assert.equal(docs.type, 'rss');
+      assert.isObject(docs.metadata);
+      assert.isArray(docs.items);
+    },
+    'response contains items': function(err, docs) {
+      assert.isArray(docs.items);
+      assert.ok(docs.items.length > 0);
+    },
+    'response items have titles': function(err, docs) {
+      assert.isArray(docs.items);
+      assert.ok(docs.items.length > 0);
+      assert.isNotNull(docs.items[0].title);
+    },
+    'response items have links': function(err, docs) {
+      assert.isArray(docs.items);
+      assert.ok(docs.items.length > 0);
+      assert.isNotNull(docs.items[0].link);
+    },
+    'response items have desc': function(err, docs) {
+      assert.isArray(docs.items);
+      assert.ok(docs.items.length > 0);
+      assert.isNotNull(docs.items[0].desc);
+    },
+    'response items have date': function(err, docs) {
+      assert.isArray(docs.items);
+      assert.ok(docs.items.length > 0);
+      assert.isNotNull(docs.items[0].date);
+    }
+  },
+  'cdata tests': {
+    topic: function() {
+      parser.parseURL('https://www.engage.hoganlovells.com/knowledgeservices/RSSAuth.action?kydt=2I8afWIM4kg%2FIbGC%2Fm2k8H26Pm6vJtg5rL21MOB7xjlEjnk3tUyvPH8IRqio7Qc5OzTQyo8Nus%2FdzoxprWhI6w%3D%3D&maxrecords=0&rqf=as&ful=1', this.callback);
     },
     'response is formatted as rss': function(err, docs) {
       assert.equal(docs.type, 'rss');
