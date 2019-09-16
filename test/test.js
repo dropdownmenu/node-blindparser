@@ -151,7 +151,7 @@ vows.describe('bindparser').addBatch({
   },
   'craigslist': {
     topic: function() {
-      parser.parseURL('http://portland.craigslist.org/sof/index.rss', this.callback);
+      parser.parseURL('https://www.craigslist.org/about/best/all/index.rss', this.callback);
     },
     'response is formatted as rss': function(err, docs) {
       assert.equal(docs.type, 'rss');
