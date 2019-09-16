@@ -93,7 +93,7 @@ vows.describe('bindparser').addBatch({
       var item = docs.items[0];
       assert.isString(item.id);
       assert.isString(item.title);
-      assert.isString(item.desc);
+      assert.isObject(item.desc);
       assert.isArray(item.category);
       assert.isString(item.link);
       assert.isNumber(item.updated);
